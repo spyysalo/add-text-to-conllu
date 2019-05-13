@@ -22,6 +22,14 @@ CONLLU_FIELDS = [
 ]
 
 
+# TODO: complete
+PTB_UNESCAPES = {
+    '``': '"',
+    "''": '"',
+}
+
+
+
 Word = namedtuple('Word', CONLLU_FIELDS)
 
 
@@ -33,6 +41,10 @@ def argparser():
     return ap
 
 
+def unescape_ptb(v):
+    return PTB_UNESCAPES.get(v, v)
+
+
 def read_sentences(f):
     words = []
     for l in f:
@@ -42,6 +54,8 @@ def read_sentences(f):
             words = []
         else:
             fields = l.split('\t')
+            for i in (CONLLU_FIELDS.index(n) for n in ['form', 'lemma']):
+                fields[i] = unescape_ptb(fields[i])
             words.append(Word(*fields))
 
 
