@@ -2,6 +2,7 @@
 
 import os
 import sys
+import re
 
 from collections import namedtuple
 
@@ -78,7 +79,9 @@ def main(argv):
         for s in read_sentences(f):
             t = ''.join(w.form for w in s)
             start, end = find_ignorespace(text, t)
-            print('# text = {}'.format(text[start:end].strip()))
+            s_text = text[start:end].strip()
+            s_text = re.sub(r'\s+', ' ', s_text)    # normalize space
+            print('# text = {}'.format(s_text))
             write_sentence(s)
             text = text[end:]
 
