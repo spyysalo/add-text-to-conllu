@@ -11,6 +11,10 @@ from logging import warning, error
 PTB_UNESCAPES = {
     '``': '"',
     "''": '"',
+    '-LRB-': '(',
+    '-RRB-': ')',
+    '-LSB-': '[',
+    '-RSB-': ']',
 }
 
 
